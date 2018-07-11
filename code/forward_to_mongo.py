@@ -8,10 +8,12 @@ db = TinyDB('data_buffer.json')
 query = Query()
 
 # setup MongoDB aggregator
-userpass="streams:streams111"
-mongo_client = MongoClient('mongodb://' + userpass + '@ds121301.mlab.com:21301/data_streams')
+userpass="davidporter:1234567a"
+# mongodb://<dbuser>:<dbpassword>@ds121311.mlab.com:21311/data_streams
+mongo_client = MongoClient('mongodb://' + userpass + '@ds121311.mlab.com:21311/data_streams')
 mongo_db = mongo_client.data_streams
 mongo_data = mongo_db.data
+print(str(mongo_client))
 
 def get_current_data():
     data = db.all()
