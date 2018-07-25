@@ -5,4 +5,4 @@ aio_key = "97ab045aa058453b900ba118206a2e31"
 
 aio = Client(aio_key)
 
-aio.send('temp', 21)
+aio.send('temp', 20)
