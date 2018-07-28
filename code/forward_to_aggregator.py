@@ -3,11 +3,6 @@ from tinydb import TinyDB, Query
 db = TinyDB('data_buffer.json')
 query = Query()
 
-from Adafruit_IO import *
-# from private import aio_key
-aio_key = "97ab045aa058453b900ba118206a2e31"
-aio = Client(aio_key)
-
 def get_current_data():
     data = db.all()
     max = 0
@@ -23,7 +18,6 @@ def get_current_data():
 while True:
     data = get_current_data()
     for item in data:
-        print('temp', item['value'])
-        aio.send('temp', item['value'])
+        print(item)
     time.sleep(15)
 

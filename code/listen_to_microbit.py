@@ -5,7 +5,7 @@ db = TinyDB('data_buffer.json')
 #table = db.table('table_name', cache_size=30)
 db.purge()
 
-microbit = serial.Serial('COM8', 115200)
+microbit = serial.Serial('/dev/tty.usbmodem1412', 115200)
 
 while True:
     while (microbit.inWaiting()==0):

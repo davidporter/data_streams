@@ -5,3 +5,4 @@ while True:
     display.scroll(" direct:" + str(i))
     print(" direct:" + str(i))
     sleep(5000)
+    

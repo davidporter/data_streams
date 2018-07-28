@@ -23,13 +23,22 @@
     <script>
       var map;
       function initMap() {
+
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 39.04, lng: -95.69},
           zoom: 5
         });
+
+        {% for item in data %}
+          var marker_{{item['name'].lower().replace(' ','_')}} = new google.maps.Marker({
+            position: { lat: {{item['lat']}}, lng: {{item['lon']}} },
+            map: map,
+            title: '{{item['capital']}}, {{item['name']}}: {{item['temp']}}'
+          });
+        {% endfor %}
       }
     </script>
-    <script src="https://maps.googleapis.com/maps/api/js?key={{google_key}}&callback=initMap"
+    <script src="https://maps.googleapis.com/maps/api/js?key={{api_key}}&callback=initMap"
     async defer></script>
   </body>
 </html>
