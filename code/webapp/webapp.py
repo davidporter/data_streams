@@ -6,6 +6,10 @@ import requests
 
 app = Flask(__name__)
 
+@app.route('/')
+def get_index():
+    return render_template("index.html")
+
 @app.route('/hello/<name>')
 def get_hello(name):
     return render_template("hello.html", name=name)
@@ -68,7 +72,7 @@ def get_map3():
         temp = int(float(w['temp']) + 0.5)
         item['temp'] = str(temp)
         item['humidity'] = str(w['humidity'])
-    print(data[0:2])
+    #print(data[0:2])
     return render_template("map3.html",api_key=private.google_key,data=data)
 
 @app.route('/map4')
@@ -80,8 +84,20 @@ def get_map4():
     for item in data:
         temp = int(float(item['temp']) + 0.5)
         item['temp'] = str(temp)
-    print(data)
+    #print(data)
     return render_template("map4.html",api_key=private.google_key,data=data)
+
+@app.route('/mapHumid')
+def get_mapHumid():
+    url = "http://drdelozier.pythonanywhere.com"
+    response = requests.get(url + "/query/example")
+    assert response.status_code == 200
+    datah = list(response.json().values())
+    for item in datah:
+        humidity = int(float(item['humidity']))
+        item['humidity'] = str(humidity)
+    #print(data)
+    return render_template("mapHumid.html",api_key=private.google_key,data=datah)
 
 @app.route('/markers1')
 def get_markers1():
@@ -108,7 +124,7 @@ def get_processing3():
     with open("us_state_capitals.json","r") as f:
         data = json.load(f)
         #data = list(data.values())
-    print(data)
+    #print(data)
     states = list(data.keys())
     reds = []
     greens = []
@@ -116,7 +132,7 @@ def get_processing3():
     for state in states:
         item = data[state]
         w = weather.get_weather(lat=item['lat'],lon=item['lon'])
-        print(w)
+        # print(w)
         temp = float(w['temp'])
         humidity = str(w['humidity'])
         red = int(temp * 5)
@@ -128,6 +144,37 @@ def get_processing3():
         greens.append(128)
         blues.append(128) 
     return render_template("processing3.html",
+                           states=states, 
+                           reds=reds, 
+                           greens=greens, 
+                           blues=blues)
+    f.close()
+
+@app.route('/processingHumid')
+def get_processingHumid():
+    with open("us_state_capitals.json","r") as f:
+        data = json.load(f)
+        #data = list(data.values())
+    # print(data)
+    states = list(data.keys())
+    reds = []
+    greens = []
+    blues = []
+    for state in states:
+        item = data[state]
+        w = weather.get_weather(lat=item['lat'],lon=item['lon'])
+        #print(w)
+        temp = float(w['temp'])
+        humidity = str(w['humidity'])
+        blue = int(humidity) *2
+        if blue < 0: 
+            blue = 0
+        if blue > 255:
+            blue = 255
+        blues.append(blue)
+        greens.append(128)
+        reds.append(100) 
+    return render_template("processingHumid.html",
                            states=states, 
                            reds=reds, 
                            greens=greens, 
