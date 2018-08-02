@@ -7,11 +7,10 @@ db = TinyDB('data_buffer.json')
 
 while True:
     # get from simulator
-    # denver seems nice
-    value = openweathermap.get_temperature("39.7392", "104.9903")
+    value = openweathermap.get_temperature("44236")
     # post it to buffer
-    record = {"time": int(time.time()), "id":"dbp.micro", "value":value}
+    record = {"time": int(time.time()), "id":"outside", "value":value}
     print(record)
     db.insert(record)
     # wait 10 seconds
-    time.sleep(10)
+    time.sleep(60)

@@ -10,4 +10,3 @@ while True:
     display.scroll(incoming)
     print(incoming)
     sleep(100)
-    

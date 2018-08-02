@@ -17,7 +17,7 @@ def get_current_data():
     print("Max time = ", max)
     print("# items = ",len(data))
     # delete all items where time <= max
-    db.remove(query.time <= max)
+    # db.remove(query.time <= max)
     return data
 
 while True:
@@ -25,5 +25,5 @@ while True:
     for item in data:
         print('temp', item['value'])
         aio.send('temp', item['value'])
-    time.sleep(15)
+    time.sleep(60*15)
 
